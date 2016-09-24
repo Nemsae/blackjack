@@ -12,6 +12,12 @@ const CardActions = {
       type: 'SHUFFLE',
     })
   },
+
+  totalPlayer() {
+    AppDispatcher.dispatch({
+      type: 'TOTAL_PLAYER'
+    })
+  },
 }
 
 export default CardActions;

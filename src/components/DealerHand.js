@@ -3,30 +3,27 @@ import React, { Component } from 'react';
 import CardStores from '../stores/CardStores';
 import CardActions from '../actions/CardActions';
 
-export default class PlayerHand extends Component {
+export default class DealerHand extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       hand: CardStores.getAll(),
-      playerTotal: 0,
-      message: '',
     }
 
-    this._onChangeDeck = this._onChangeDeck.bind(this);
+    this._onChangePlayerHand = this._onChangePlayerHand.bind(this);
     this._hit = this._hit.bind(this);
-    // this._ace = this._ace.bind(this);
   }
 
   componentWillMount() {
-    CardStores.startListening(this._onChangeDeck);
+    CardStores.startListening(this._onChangePlayerHand);
   }
 
   componentWillUnmount() {
-    CardStores.stopListening(this._onChangeDeck);
+    CardStores.stopListening(this._onChangePlayerHand);
   }
 
-  _onChangeDeck() {
+  _onChangePlayerHand() {
     this.setState({
       hand: CardStores.getAll(),
     })
@@ -96,22 +93,20 @@ export default class PlayerHand extends Component {
   // }
 
   render() {
-    const { hand, playerTotal, message } = this.state;
+    const {  } = this.state;
     return (
       <div className="container">
         <div className="col-xs-6">
-          <h3>Player's Hand</h3>
+          <h3>Dealer's Hand</h3>
 
-          { hand.map(card => (
+          {/* { hand.map(card => (
               <div>
                 <h4>{card.value} of {card.suit}</h4>
               </div>
-          ))}
+          ))} */}
 
-          <h4>{ playerTotal }</h4>
-          <button onClick={this._hit}>Hit!</button>
-          <button onClick={this._stay}>Stay!</button>
-          <h1>{ message }</h1>
+          <h4>{ }</h4>
+
         </div>
       </div>
     )
