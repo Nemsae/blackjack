@@ -3,13 +3,13 @@ import AppDispatcher from '../AppDispatcher';
 const CardActions = {
   draw() {
     AppDispatcher.dispatch({
-      type: 'CARD_GRAB',
+      type: 'PLAYER_DRAW',
     })
   },
 
-  shuffle() {
+  newGame() {
     AppDispatcher.dispatch({
-      type: 'SHUFFLE',
+      type: 'NEW_GAME',
     })
   },
 
@@ -18,6 +18,30 @@ const CardActions = {
       type: 'TOTAL_PLAYER'
     })
   },
+
+  dealerDraw() {
+    AppDispatcher.dispatch({
+      type: 'DEALER_DRAW'
+    })
+  },
+
+  totalDealer() {
+    AppDispatcher.dispatch({
+      type: 'TOTAL_DEALER'
+    })
+  },
+
+  winnerCheck() {
+    AppDispatcher.dispatch({
+      type: 'CHECK_WINNER'
+    })
+  },
+
+  bustCheck() {
+    AppDispatcher.dispatch({
+      type: 'CHECK_BUST'
+    })
+  }
 }
 
 export default CardActions;

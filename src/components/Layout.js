@@ -10,14 +10,20 @@ export default class Layout extends Component {
     super(props);
 
     this.state = {
-      hand: CardStores.getAll(),
+      hand: CardStores.getPlayerHand(),
     }
 
-    this._shuffle = this._shuffle.bind(this);
+    this._newGame = this._newGame.bind(this);
   }
 
-  _shuffle() {
-    CardActions.shuffle();
+  _newGame() {
+    CardActions.newGame();
+    CardActions.draw();
+    CardActions.draw();
+    CardActions.dealerDraw();
+    CardActions.totalPlayer();
+    CardActions.totalDealer();
+
   }
 
   render() {
@@ -25,7 +31,7 @@ export default class Layout extends Component {
       <div className="container text-center">
         <h1 className="text-center">Black Jack</h1>
         <div className='col-xs-12 text-center'>
-          <button onClick={this._shuffle()}>Start/Shuffle</button>
+          <button onClick={this._newGame}>New Game</button>
         </div>
         <div className="col-xs-6">
           <PlayerHand />
