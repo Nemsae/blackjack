@@ -9,6 +9,7 @@ export default class PlayerHand extends Component {
 
     this.state = {
       hand: CardStores.getAll(),
+      playerTotal: 0,
     }
 
     this._onChange = this._onChange.bind(this);
@@ -37,32 +38,33 @@ export default class PlayerHand extends Component {
   _convertCards() {
     let handArray = this.state.hand;
     console.log("Player's Hand: ",handArray);
-    // for (let i=0;i<handArray.length;i++) {
-    //   let cardObject = handArray[0][0];
-    //   console.log('cardObject: ',cardObject);
-    //   console.log('suit of each: ',cardObject.suit);
-    //   console.log('value of each: ',cardObject.value);
-    // }
+    let cardTotal = 0;
 
-    // for (let i=0;i<handArray.length;i++) {
-    //   let card = handArray[i];
-    //   console.log('card: ',card);
-    //   let suit = card.slice(0,1);
-    //   console.log('suit: ',suit);
-    //   let number = card.slice(1);
-    //   console.log('number: ',number)
-    // }
+    for (let i=0;i<handArray.length;i++) {
+      let card = handArray[i];
+      console.log('cardObject: ',card);
+      console.log('suit of each: ',card.suit);
+      console.log('value of each: ',card.value);
+      if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
+        cardTotal += 10;
+      } else if (card.value === 'A') {
+        //trigger function _ace(); _ace() will return a number
+        // num = _ace();
+        // cardTotal += num;
+        cardTotal += 11;
+      } else {
+        cardTotal += card.value;
+      }
+    }
 
+    this.setState({
+      playerTotal: cardTotal,
+    })
 
-    // let cardString = (this.state.hand).toString();
-    // console.log(cardString);
-    //
-    // // if (number === )
-    // console.log('number: ',number);
-    // let suit = cardString.slice(0,1);
-    // console.log('suit: ',suit);
+  }
 
-
+  _ace() {
+    
   }
 
 //Stay will trigger Dealer to draw
@@ -71,18 +73,22 @@ export default class PlayerHand extends Component {
   // }
 
   render() {
-    const { hand } = this.state;
+    const { hand, playerTotal } = this.state;
     return (
       <div className="container">
         <div className="col-xs-6">
           <h3>Player's Hand</h3>
-          { hand.map(card => {
-            <div>
-              <h4>{card.suit}</h4>
-              <h4>{card.value}</h4>
-            </div>
-          }) }
-          {/* <h3>{ hand }</h3> */}
+          { hand.map(card => (
+            // console.log('card',card);
+            // console.log('card suit',card.suit);
+            // console.log('card value',card.value);
+
+              <div>
+                <h4>{card.value} of {card.suit}</h4>
+              </div>
+
+          ))}
+          <h4>{ playerTotal }</h4>
           <button onClick={this._hit}>Hit!</button>
           <button onClick={this._stay}>Stay!</button>
         </div>

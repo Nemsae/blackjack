@@ -10,6 +10,8 @@ class CardStores extends EventEmitter {
   constructor() {
     super();
 
+
+    // this.token = AppDispatcher.register(action => {
     AppDispatcher.register(action => {
       console.log('action: ',action);
       switch(action.type) {
