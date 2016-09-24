@@ -8,7 +8,16 @@ const CardActions = {
         card: card,
       }
     })
-  }
+  },
+
+  shuffle(card) {
+    AppDispatcher.dispatch({
+      type: 'SHUFFLE',
+      payload: {
+        card: card,
+      }
+    })
+  },
 }
 
 export default CardActions;

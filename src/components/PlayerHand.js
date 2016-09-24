@@ -36,15 +36,24 @@ export default class PlayerHand extends Component {
 
   _convertCards() {
     let handArray = this.state.hand;
-    console.log(handArray);
-    for (let i=0;i<handArray.length;i++) {
-      let card = handArray[i];
-      console.log('card: ',card);
-      let suit = card.slice(0,1);
-      console.log('suit: ',suit);
-      let number = card.slice(1);
-      console.log('number: ',number)
-    }
+    console.log("Player's Hand: ",handArray);
+    // for (let i=0;i<handArray.length;i++) {
+    //   let cardObject = handArray[0][0];
+    //   console.log('cardObject: ',cardObject);
+    //   console.log('suit of each: ',cardObject.suit);
+    //   console.log('value of each: ',cardObject.value);
+    // }
+
+    // for (let i=0;i<handArray.length;i++) {
+    //   let card = handArray[i];
+    //   console.log('card: ',card);
+    //   let suit = card.slice(0,1);
+    //   console.log('suit: ',suit);
+    //   let number = card.slice(1);
+    //   console.log('number: ',number)
+    // }
+
+
     // let cardString = (this.state.hand).toString();
     // console.log(cardString);
     //
@@ -67,7 +76,13 @@ export default class PlayerHand extends Component {
       <div className="container">
         <div className="col-xs-6">
           <h3>Player's Hand</h3>
-          <h3>{ hand }</h3>
+          { hand.map(card => {
+            <div>
+              <h4>{card.suit}</h4>
+              <h4>{card.value}</h4>
+            </div>
+          }) }
+          {/* <h3>{ hand }</h3> */}
           <button onClick={this._hit}>Hit!</button>
           <button onClick={this._stay}>Stay!</button>
         </div>
