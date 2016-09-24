@@ -1,21 +1,15 @@
 import AppDispatcher from '../AppDispatcher';
 
 const CardActions = {
-  draw(card) {
+  draw() {
     AppDispatcher.dispatch({
       type: 'CARD_GRAB',
-      payload: {
-        card: card,
-      }
     })
   },
 
-  shuffle(card) {
+  shuffle() {
     AppDispatcher.dispatch({
       type: 'SHUFFLE',
-      payload: {
-        card: card,
-      }
     })
   },
 }

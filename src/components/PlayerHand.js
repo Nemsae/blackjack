@@ -10,21 +10,23 @@ export default class PlayerHand extends Component {
     this.state = {
       hand: CardStores.getAll(),
       playerTotal: 0,
+      // aceCount: 0,
     }
 
-    this._onChange = this._onChange.bind(this);
+    this._onChangeDeck = this._onChangeDeck.bind(this);
     this._hit = this._hit.bind(this);
+    // this._ace = this._ace.bind(this);
   }
 
   componentWillMount() {
-    CardStores.startListening(this._onChange);
+    CardStores.startListening(this._onChangeDeck);
   }
 
   componentWillUnmount() {
-    CardStores.stopListening(this._onChange);
+    CardStores.stopListening(this._onChangeDeck);
   }
 
-  _onChange() {
+  _onChangeDeck() {
     this.setState({
       hand: CardStores.getAll(),
     })
@@ -32,40 +34,63 @@ export default class PlayerHand extends Component {
 
   _hit() {
     CardActions.draw();
-    this._convertCards();
+    this._countCards();
   }
 
-  _convertCards() {
+  _countCards() {
     let handArray = this.state.hand;
     console.log("Player's Hand: ",handArray);
-    let cardTotal = 0;
-
+    var cardTotal = 0;
+    var aceCount = 0;
     for (let i=0;i<handArray.length;i++) {
       let card = handArray[i];
-      console.log('cardObject: ',card);
-      console.log('suit of each: ',card.suit);
-      console.log('value of each: ',card.value);
+
       if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
-        cardTotal += 10;
+        if (cardTotal+10>21 && aceCount > 0) {
+          cardTotal -= 10;
+          aceCount--;
+          cardTotal += 10;
+        } else {
+          cardTotal += 10;
+        }
       } else if (card.value === 'A') {
-        //trigger function _ace(); _ace() will return a number
-        // num = _ace();
-        // cardTotal += num;
-        cardTotal += 11;
+        aceCount++;
+        if(cardTotal>10) {
+          aceCount--;
+          cardTotal += 1;
+        } else {
+          cardTotal += 11;
+        }
       } else {
-        cardTotal += card.value;
+        if (cardTotal+card.value>21 && aceCount > 0) {
+          cardTotal -= 10;
+          aceCount--;
+          cardTotal += card.value;
+        } else {
+          cardTotal += card.value;
+        }
       }
     }
 
     this.setState({
       playerTotal: cardTotal,
+      // aceCount,
     })
-
   }
 
-  _ace() {
-    
-  }
+  // _ace() {
+  //   console.log('ace');
+  //   let { aceCount, cardTotal } = this.state;
+  //   if (cardTotal>21 && aceCount > 0) {
+  //     aceCount--;
+  //     cardTotal -= 10;
+  //   }
+  //
+  //   this.setState({
+  //     cardTotal,
+  //     aceCount,
+  //   })
+  // }
 
 //Stay will trigger Dealer to draw
   // _stay() {
@@ -78,16 +103,13 @@ export default class PlayerHand extends Component {
       <div className="container">
         <div className="col-xs-6">
           <h3>Player's Hand</h3>
-          { hand.map(card => (
-            // console.log('card',card);
-            // console.log('card suit',card.suit);
-            // console.log('card value',card.value);
 
+          { hand.map(card => (
               <div>
                 <h4>{card.value} of {card.suit}</h4>
               </div>
-
           ))}
+
           <h4>{ playerTotal }</h4>
           <button onClick={this._hit}>Hit!</button>
           <button onClick={this._stay}>Stay!</button>
