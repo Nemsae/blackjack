@@ -10,7 +10,7 @@ export default class PlayerHand extends Component {
     this.state = {
       hand: CardStores.getAll(),
       playerTotal: 0,
-      // aceCount: 0,
+      message: '',
     }
 
     this._onChangeDeck = this._onChangeDeck.bind(this);
@@ -38,6 +38,7 @@ export default class PlayerHand extends Component {
   }
 
   _countCards() {
+    let { hand, message } = this.state;
     let handArray = this.state.hand;
     console.log("Player's Hand: ",handArray);
     var cardTotal = 0;
@@ -72,25 +73,22 @@ export default class PlayerHand extends Component {
       }
     }
 
+    if(cardTotal === 21) {
+      this.setState({
+        message: 'BLACK JACKED!!!',
+      })
+    } else if (cardTotal > 21) {
+      this.setState({
+        message: 'BUST :('
+      })
+    }
+
     this.setState({
       playerTotal: cardTotal,
       // aceCount,
     })
   }
 
-  // _ace() {
-  //   console.log('ace');
-  //   let { aceCount, cardTotal } = this.state;
-  //   if (cardTotal>21 && aceCount > 0) {
-  //     aceCount--;
-  //     cardTotal -= 10;
-  //   }
-  //
-  //   this.setState({
-  //     cardTotal,
-  //     aceCount,
-  //   })
-  // }
 
 //Stay will trigger Dealer to draw
   // _stay() {
@@ -98,7 +96,7 @@ export default class PlayerHand extends Component {
   // }
 
   render() {
-    const { hand, playerTotal } = this.state;
+    const { hand, playerTotal, message } = this.state;
     return (
       <div className="container">
         <div className="col-xs-6">
@@ -113,6 +111,7 @@ export default class PlayerHand extends Component {
           <h4>{ playerTotal }</h4>
           <button onClick={this._hit}>Hit!</button>
           <button onClick={this._stay}>Stay!</button>
+          <h1>{ message }</h1>
         </div>
       </div>
       //<DealerHand>
