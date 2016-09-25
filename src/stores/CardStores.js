@@ -15,12 +15,9 @@ class CardStores extends EventEmitter {
     super();
 
     AppDispatcher.register(action => {
-      console.log('action: ',action);
       switch(action.type) {
         case 'PLAYER_DRAW':
-          console.log('_cards: ',_cards);
           let newCard = _cards.pop();
-          console.log('newCard: ',newCard);
           _playerCards.push(newCard);
           this.emit('CHANGE');
           break;
@@ -156,7 +153,6 @@ class CardStores extends EventEmitter {
   }
 
   getPlayerHand() {
-    // console.log('playercards: ',_playerCards);
     return _playerCards;
   }
 

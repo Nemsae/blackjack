@@ -39,7 +39,6 @@ export default class DealerHand extends Component {
 
           { dealersHand.map((card, i) => (
               <div key={i} className='left'>
-                {/* <h4>{card.value} of {card.suit}</h4> */}
                 <h4 className='card' >{card.img}</h4>
               </div>
           ))}
