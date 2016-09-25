@@ -38,8 +38,9 @@ export default class DealerHand extends Component {
           <h3>Dealer's Hand: { dealersTotal }</h3>
 
           { dealersHand.map((card, i) => (
-              <div key={i}>
-                <h4>{card.value} of {card.suit}</h4>
+              <div key={i} className='left'>
+                {/* <h4>{card.value} of {card.suit}</h4> */}
+                <h4 className='card' >{card.img}</h4>
               </div>
           ))}
 

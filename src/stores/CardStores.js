@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import lodash from 'lodash';
 import CardActions from '../actions/CardActions'
 
-let _cards = [{suit: 'Clubs', value: 2, url: ''},{suit: 'Clubs', value: 3, url: ''},{suit: 'Clubs', value: 4, url: ''},{suit: 'Clubs', value: 5, url: ''},{suit: 'Clubs', value: 6, url: ''},{suit: 'Clubs', value: 7, url: ''},{suit: 'Clubs', value: 8, url: ''},{suit: 'Clubs', value: 9, url: ''},{suit: 'Clubs', value: 10, url: ''},{suit: 'Clubs', value: 'J', url: ''},{suit: 'Clubs', value: 'Q', url: ''},{suit: 'Clubs', value: 'K', url: ''},{suit: 'Clubs', value: 'A', url: ''},{suit: 'Diamonds', value: 2, url: ''},{suit: 'Diamonds', value: 3, url: ''},{suit: 'Diamonds', value: 4, url: ''},{suit: 'Diamonds', value: 5, url: ''},{suit: 'Diamonds', value: 6, url: ''},{suit: 'Diamonds', value: 7, url: ''},{suit: 'Diamonds', value: 8, url: ''},{suit: 'Diamonds', value: 9, url: ''},{suit: 'Diamonds', value: 10, url: ''},{suit: 'Diamonds', value: 'J', url: ''},{suit: 'Diamonds', value: 'Q', url: ''},{suit: 'Diamonds', value: 'K', url: ''},{suit: 'Diamonds', value: 'A', url: ''},{suit: 'Hearts', value: 2, url: ''},{suit: 'Hearts', value: 3, url: ''},{suit: 'Hearts', value: 4, url: ''},{suit: 'Hearts', value: 5, url: ''},{suit: 'Hearts', value: 6, url: ''},{suit: 'Hearts', value: 7, url: ''},{suit: 'Hearts', value: 8, url: ''},{suit: 'Hearts', value: 9, url: ''},{suit: 'Hearts', value: 10, url: ''},{suit: 'Hearts', value: 'J', url: ''},{suit: 'Hearts', value: 'Q', url: ''},{suit: 'Hearts', value: 'K', url: ''},{suit: 'Hearts', value: 'A', url: ''},{suit: 'Spades', value: 2, url: ''},{suit: 'Spades', value: 3, url: ''},{suit: 'Spades', value: 4, url: ''},{suit: 'Spades', value: 5, url: ''},{suit: 'Spades', value: 6, url: ''},{suit: 'Spades', value: 7, url: ''},{suit: 'Spades', value: 8, url: ''},{suit: 'Spades', value: 9, url: ''},{suit: 'Spades', value: 10, url: ''},{suit: 'Spades', value: 'J', url: ''},{suit: 'Spades', value: 'Q', url: ''},{suit: 'Spades', value: 'K', url: ''},{suit: 'Spades', value: 'A', url: ''}];
+let _cards = [{suit: 'Clubs', value: 2, img: '🃒'},{suit: 'Clubs', value: 3, img: '🃓'},{suit: 'Clubs', value: 4, img: '🃔'},{suit: 'Clubs', value: 5, img: '🃕'},{suit: 'Clubs', value: 6, img: '🃖'},{suit: 'Clubs', value: 7, img: '🃗'},{suit: 'Clubs', value: 8, img: '🃘'},{suit: 'Clubs', value: 9, img: '🃙'},{suit: 'Clubs', value: 10, img: '🃚'},{suit: 'Clubs', value: 'J', img: '🃛'},{suit: 'Clubs', value: 'Q', img: '🃝'},{suit: 'Clubs', value: 'K', img: '🃞'},{suit: 'Clubs', value: 'A', img: '🃑'},{suit: 'Diamonds', value: 2, img: '🃂'},{suit: 'Diamonds', value: 3, img: '🃃'},{suit: 'Diamonds', value: 4, img: '🃄'},{suit: 'Diamonds', value: 5, img: '🃅'},{suit: 'Diamonds', value: 6, img: '🃆'},{suit: 'Diamonds', value: 7, img: '🃇'},{suit: 'Diamonds', value: 8, img: '🃈'},{suit: 'Diamonds', value: 9, img: '🃉'},{suit: 'Diamonds', value: 10, img: '🃊'},{suit: 'Diamonds', value: 'J', img: '🃋'},{suit: 'Diamonds', value: 'Q', img: '🃍'},{suit: 'Diamonds', value: 'K', img: '🃎'},{suit: 'Diamonds', value: 'A', img: '🃁'},{suit: 'Hearts', value: 2, img: '🂲'},{suit: 'Hearts', value: 3, img: '🂳'},{suit: 'Hearts', value: 4, img: '🂴'},{suit: 'Hearts', value: 5, img: '🂵'},{suit: 'Hearts', value: 6, img: '🂶'},{suit: 'Hearts', value: 7, img: '🂷'},{suit: 'Hearts', value: 8, img: '🂸'},{suit: 'Hearts', value: 9, img: '🂹'},{suit: 'Hearts', value: 10, img: '🂺'},{suit: 'Hearts', value: 'J', img: '🂻'},{suit: 'Hearts', value: 'Q', img: '🂽'},{suit: 'Hearts', value: 'K', img: '🂾'},{suit: 'Hearts', value: 'A', img: '🂱'},{suit: 'Spades', value: 2, img: '🂢'},{suit: 'Spades', value: 3, img: '🂣'},{suit: 'Spades', value: 4, img: '🂤'},{suit: 'Spades', value: 5, img: '🂥'},{suit: 'Spades', value: 6, img: '🂦'},{suit: 'Spades', value: 7, img: '🂧'},{suit: 'Spades', value: 8, img: '🂨'},{suit: 'Spades', value: 9, img: '🂩'},{suit: 'Spades', value: 10, img: '🂪'},{suit: 'Spades', value: 'J', img: '🂫'},{suit: 'Spades', value: 'Q', img: '🂭'},{suit: 'Spades', value: 'K', img: '🂮'},{suit: 'Spades', value: 'A', img: '🂡'}];
 let _playerCards = [];
 let _dealerCards = [];
 let _message = '';
@@ -18,13 +18,31 @@ class CardStores extends EventEmitter {
       console.log('action: ',action);
       switch(action.type) {
         case 'PLAYER_DRAW':
+          console.log('_cards: ',_cards);
           let newCard = _cards.pop();
+          console.log('newCard: ',newCard);
           _playerCards.push(newCard);
           this.emit('CHANGE');
           break;
         case 'DEALER_DRAW':
           let newCardDealer = _cards.pop();
           _dealerCards.push(newCardDealer);
+          this.emit('CHANGE');
+          break;
+        case 'DEALER_BLANK':
+          let { blankCard } = action.payload;
+          _dealerCards.push(blankCard);
+          this.emit('CHANGE');
+          break;
+        case 'DELETE_BLANK':
+          let noBlankCards = _dealerCards.filter(card=> {
+            if (card.suit == 'blank') {
+              return;
+            } else {
+              return card;
+            }
+          })
+          _dealerCards = noBlankCards;
           this.emit('CHANGE');
           break;
         case 'NEW_GAME':
@@ -124,6 +142,7 @@ class CardStores extends EventEmitter {
           this.emit('CHANGE');
           break;
         case 'CHECK_STAY':
+          this.flipBlank();
           while (_dealerTotal<18) {
             this.pushCard();
             this.countDealerHand();
@@ -142,6 +161,11 @@ class CardStores extends EventEmitter {
           break;
       }
     });
+  }
+
+  flipBlank() {
+    let newCard2 = _cards.pop();
+    _dealerCards.unshift(newCard2);
   }
 
   pushCard() {
@@ -193,6 +217,7 @@ class CardStores extends EventEmitter {
   }
 
   getPlayerHand() {
+    // console.log('playercards: ',_playerCards);
     return _playerCards;
   }
 

@@ -21,6 +21,7 @@ export default class Layout extends Component {
     CardActions.newGame();
     CardActions.draw();
     CardActions.draw();
+    CardActions.dealerDrawBlank();
     CardActions.dealerDraw();
     // CardActions.dealerDraw();
     CardActions.totalPlayer();

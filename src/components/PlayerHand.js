@@ -41,6 +41,7 @@ export default class PlayerHand extends Component {
   }
 
   _stay() {
+    CardActions.deleteBlank();
     CardActions.stayCheck();
     CardActions.winnerCheck();
   }
@@ -51,15 +52,21 @@ export default class PlayerHand extends Component {
       <div className="container">
         <div className="col-xs-6">
           <h3>Player's Hand: { playerTotal }</h3>
+          <div className='col-xs-12'>
+            {/* <div className='hand'> */}
 
-          { hand.map((card, i) => (
-              <div key={i}>
-                <h4>{card.value} of {card.suit}</h4>
+            { hand.map((card, i) => (
+              <div key={i} className='left'>
+                {/* <h4>{card.value} of {card.suit}</h4> */}
+                <h4 className='card' >{card.img}</h4>
               </div>
-          ))}
+            ))}
 
-          <button onClick={this._hit}>Hit!</button>
-          <button onClick={this._stay}>Stay!</button>
+          </div>
+          <div className="col-xs-12">
+            <button onClick={this._hit}>Hit!</button>
+            <button onClick={this._stay}>Stay!</button>
+          </div>
           <h1>{ message }</h1>
         </div>
       </div>
