@@ -1,6 +1,7 @@
 import AppDispatcher from '../AppDispatcher';
 import { EventEmitter } from 'events';
 import lodash from 'lodash';
+import CardActions from '../actions/CardActions'
 
 let _cards = [{suit: 'Clubs', value: 2, url: ''},{suit: 'Clubs', value: 3, url: ''},{suit: 'Clubs', value: 4, url: ''},{suit: 'Clubs', value: 5, url: ''},{suit: 'Clubs', value: 6, url: ''},{suit: 'Clubs', value: 7, url: ''},{suit: 'Clubs', value: 8, url: ''},{suit: 'Clubs', value: 9, url: ''},{suit: 'Clubs', value: 10, url: ''},{suit: 'Clubs', value: 'J', url: ''},{suit: 'Clubs', value: 'Q', url: ''},{suit: 'Clubs', value: 'K', url: ''},{suit: 'Clubs', value: 'A', url: ''},{suit: 'Diamonds', value: 2, url: ''},{suit: 'Diamonds', value: 3, url: ''},{suit: 'Diamonds', value: 4, url: ''},{suit: 'Diamonds', value: 5, url: ''},{suit: 'Diamonds', value: 6, url: ''},{suit: 'Diamonds', value: 7, url: ''},{suit: 'Diamonds', value: 8, url: ''},{suit: 'Diamonds', value: 9, url: ''},{suit: 'Diamonds', value: 10, url: ''},{suit: 'Diamonds', value: 'J', url: ''},{suit: 'Diamonds', value: 'Q', url: ''},{suit: 'Diamonds', value: 'K', url: ''},{suit: 'Diamonds', value: 'A', url: ''},{suit: 'Hearts', value: 2, url: ''},{suit: 'Hearts', value: 3, url: ''},{suit: 'Hearts', value: 4, url: ''},{suit: 'Hearts', value: 5, url: ''},{suit: 'Hearts', value: 6, url: ''},{suit: 'Hearts', value: 7, url: ''},{suit: 'Hearts', value: 8, url: ''},{suit: 'Hearts', value: 9, url: ''},{suit: 'Hearts', value: 10, url: ''},{suit: 'Hearts', value: 'J', url: ''},{suit: 'Hearts', value: 'Q', url: ''},{suit: 'Hearts', value: 'K', url: ''},{suit: 'Hearts', value: 'A', url: ''},{suit: 'Spades', value: 2, url: ''},{suit: 'Spades', value: 3, url: ''},{suit: 'Spades', value: 4, url: ''},{suit: 'Spades', value: 5, url: ''},{suit: 'Spades', value: 6, url: ''},{suit: 'Spades', value: 7, url: ''},{suit: 'Spades', value: 8, url: ''},{suit: 'Spades', value: 9, url: ''},{suit: 'Spades', value: 10, url: ''},{suit: 'Spades', value: 'J', url: ''},{suit: 'Spades', value: 'Q', url: ''},{suit: 'Spades', value: 'K', url: ''},{suit: 'Spades', value: 'A', url: ''}];
 let _playerCards = [];
@@ -104,7 +105,7 @@ class CardStores extends EventEmitter {
           break;
         case 'CHECK_BUST':
           if(_playerTotal === 21) {
-              _message = 'BLACK JACKED!!!';
+              _message = 'BLACKJACK!!!';
           } else if (_playerTotal > 21) {
             _message = 'BUST :(';
           }
@@ -116,14 +117,61 @@ class CardStores extends EventEmitter {
           } else if (_playerTotal > _dealerTotal) {
             _message = 'You Win!';
           } else if (_dealerTotal > _playerTotal) {
-            _message = 'You Win!';
+            _message = 'You Lose :(';
           } else if (_dealerTotal === _playerTotal) {
             _message = 'Push :(';
           }
           this.emit('CHANGE');
           break;
+        case 'CHECK_STAY':
+          while (_dealerTotal<18) {
+            this.pushCard();
+            this.countDealerHand();
+          }
+          this.emit('CHANGE');
+          break;
       }
     });
+  }
+
+  pushCard() {
+    let newCardDealer = _cards.pop();
+    _dealerCards.push(newCardDealer);
+  }
+
+  countDealerHand() {
+    let cardTotal3 = 0;
+    let aceCount3 = 0;
+    for (let i=0;i<_dealerCards.length;i++) {
+      let card = _dealerCards[i];
+
+      if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
+        if (cardTotal3+10>21 && aceCount3 > 0) {
+          cardTotal3 -= 10;
+          aceCount3--;
+          cardTotal3 += 10;
+        } else {
+          cardTotal3 += 10;
+        }
+      } else if (card.value === 'A') {
+        aceCount3++;
+        if(cardTotal3>10) {
+          aceCount3--;
+          cardTotal3 += 1;
+        } else {
+          cardTotal3 += 11;
+        }
+      } else {
+        if (cardTotal3+card.value>21 && aceCount3 > 0) {
+          cardTotal3 -= 10;
+          aceCount3--;
+          cardTotal3 += card.value;
+        } else {
+          cardTotal3 += card.value;
+        }
+      }
+    }
+    _dealerTotal = cardTotal3;
   }
 
   startListening(callback) {

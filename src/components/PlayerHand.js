@@ -11,7 +11,6 @@ export default class PlayerHand extends Component {
       hand: CardStores.getPlayerHand(),
       playerTotal: CardStores.getPlayerTotal(),
       message: CardStores.getMessage(),
-      dealersTotal: CardStores.getDealerTotal(),
     }
 
     this._onChangePlayerHand = this._onChangePlayerHand.bind(this);
@@ -32,7 +31,6 @@ export default class PlayerHand extends Component {
       hand: CardStores.getPlayerHand(),
       message: CardStores.getMessage(),
       playerTotal: CardStores.getPlayerTotal(),
-      dealersTotal: CardStores.getDealerTotal(),
     })
   }
 
@@ -43,14 +41,7 @@ export default class PlayerHand extends Component {
   }
 
   _stay() {
-    CardActions.dealerDraw();
-    while (this.state.dealersTotal<17) {
-      CardActions.dealerDraw();
-    }
-    CardActions.winnerCheck();
-  }
-
-  _checkWinner() {
+    CardActions.stayCheck();
     CardActions.winnerCheck();
   }
 

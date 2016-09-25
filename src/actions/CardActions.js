@@ -41,7 +41,15 @@ const CardActions = {
     AppDispatcher.dispatch({
       type: 'CHECK_BUST'
     })
-  }
+  },
+
+  stayCheck() {
+    AppDispatcher.dispatch({
+      type: 'CHECK_STAY'
+    })
+  },
+
+
 }
 
 export default CardActions;
