@@ -51,7 +51,7 @@ export default class Layout extends Component {
         <div className='col-xs-12 text-center'>
           <button onClick={this._newGame}>New Game</button>
         </div>
-        <div className="col-xs-12 text-center">
+        <div className="col-xs-12 text-center message">
           <h2>{ message }</h2>
         </div>
         <div className="col-xs-6">
