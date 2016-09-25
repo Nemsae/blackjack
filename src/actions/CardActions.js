@@ -49,6 +49,15 @@ const CardActions = {
     })
   },
 
+  reset() {
+    AppDispatcher.dispatch({
+      type: 'RESET_GAME',
+      payload: {
+        newDeck: [{suit: 'Clubs', value: 2, url: ''},{suit: 'Clubs', value: 3, url: ''},{suit: 'Clubs', value: 4, url: ''},{suit: 'Clubs', value: 5, url: ''},{suit: 'Clubs', value: 6, url: ''},{suit: 'Clubs', value: 7, url: ''},{suit: 'Clubs', value: 8, url: ''},{suit: 'Clubs', value: 9, url: ''},{suit: 'Clubs', value: 10, url: ''},{suit: 'Clubs', value: 'J', url: ''},{suit: 'Clubs', value: 'Q', url: ''},{suit: 'Clubs', value: 'K', url: ''},{suit: 'Clubs', value: 'A', url: ''},{suit: 'Diamonds', value: 2, url: ''},{suit: 'Diamonds', value: 3, url: ''},{suit: 'Diamonds', value: 4, url: ''},{suit: 'Diamonds', value: 5, url: ''},{suit: 'Diamonds', value: 6, url: ''},{suit: 'Diamonds', value: 7, url: ''},{suit: 'Diamonds', value: 8, url: ''},{suit: 'Diamonds', value: 9, url: ''},{suit: 'Diamonds', value: 10, url: ''},{suit: 'Diamonds', value: 'J', url: ''},{suit: 'Diamonds', value: 'Q', url: ''},{suit: 'Diamonds', value: 'K', url: ''},{suit: 'Diamonds', value: 'A', url: ''},{suit: 'Hearts', value: 2, url: ''},{suit: 'Hearts', value: 3, url: ''},{suit: 'Hearts', value: 4, url: ''},{suit: 'Hearts', value: 5, url: ''},{suit: 'Hearts', value: 6, url: ''},{suit: 'Hearts', value: 7, url: ''},{suit: 'Hearts', value: 8, url: ''},{suit: 'Hearts', value: 9, url: ''},{suit: 'Hearts', value: 10, url: ''},{suit: 'Hearts', value: 'J', url: ''},{suit: 'Hearts', value: 'Q', url: ''},{suit: 'Hearts', value: 'K', url: ''},{suit: 'Hearts', value: 'A', url: ''},{suit: 'Spades', value: 2, url: ''},{suit: 'Spades', value: 3, url: ''},{suit: 'Spades', value: 4, url: ''},{suit: 'Spades', value: 5, url: ''},{suit: 'Spades', value: 6, url: ''},{suit: 'Spades', value: 7, url: ''},{suit: 'Spades', value: 8, url: ''},{suit: 'Spades', value: 9, url: ''},{suit: 'Spades', value: 10, url: ''},{suit: 'Spades', value: 'J', url: ''},{suit: 'Spades', value: 'Q', url: ''},{suit: 'Spades', value: 'K', url: ''},{suit: 'Spades', value: 'A', url: ''}],
+      }
+    })
+  }
+
 
 }
 

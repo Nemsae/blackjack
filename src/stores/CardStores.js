@@ -130,6 +130,16 @@ class CardStores extends EventEmitter {
           }
           this.emit('CHANGE');
           break;
+        case 'RESET_GAME':
+          let { newDeck } = action.payload;
+          _cards = newDeck;
+          _playerCards = [];
+          _dealerCards = [];
+          _message = '';
+          _playerTotal = undefined;
+          _dealerTotal = undefined;
+          this.emit('CHANGE');
+          break;
       }
     });
   }

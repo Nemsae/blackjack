@@ -17,6 +17,7 @@ export default class Layout extends Component {
   }
 
   _newGame() {
+    CardActions.reset();
     CardActions.newGame();
     CardActions.draw();
     CardActions.draw();
