@@ -50,13 +50,75 @@ class CardStores extends EventEmitter {
           this.emit('CHANGE');
           break;
         case 'TOTAL_PLAYER':
-          let newTotal1 = this.countHand(_playerCards);
-          _playerTotal = newTotal1;
+          let cardTotal = 0;
+          let aceCount = 0;
+          for (let i=0;i<_playerCards.length;i++) {
+            let card = _playerCards[i];
+
+            if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
+              if (cardTotal+10>21 && aceCount > 0) {
+                cardTotal -= 10;
+                aceCount--;
+                cardTotal += 10;
+              } else {
+                cardTotal += 10;
+              }
+            } else if (card.value === 'A') {
+              aceCount++;
+              if(cardTotal>10) {
+                aceCount--;
+                cardTotal += 1;
+              } else {
+                cardTotal += 11;
+              }
+            } else {
+              if (cardTotal+card.value>21 && aceCount > 0) {
+                cardTotal -= 10;
+                aceCount--;
+                cardTotal += card.value;
+              } else {
+                cardTotal += card.value;
+              }
+            }
+          }
+
+          _playerTotal = cardTotal;
+
           this.emit('CHANGE');
           break;
         case 'TOTAL_DEALER':
-          let newTotal2 = this.countHand(_dealerCards);
-          _dealerTotal = newTotal2;
+          let cardTotal2 = 0;
+          let aceCount2 = 0;
+          for (let i=0;i<_dealerCards.length;i++) {
+            let card = _dealerCards[i];
+
+            if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
+              if (cardTotal2+10>21 && aceCount2 > 0) {
+                cardTotal2 -= 10;
+                aceCount2--;
+                cardTotal2 += 10;
+              } else {
+                cardTotal2 += 10;
+              }
+            } else if (card.value === 'A') {
+              aceCount2++;
+              if(cardTotal2>10) {
+                aceCount2--;
+                cardTotal2 += 1;
+              } else {
+                cardTotal2 += 11;
+              }
+            } else {
+              if (cardTotal2+card.value>21 && aceCount2 > 0) {
+                cardTotal2 -= 10;
+                aceCount2--;
+                cardTotal2 += card.value;
+              } else {
+                cardTotal2 += card.value;
+              }
+            }
+          }
+          _dealerTotal = cardTotal2;
           this.emit('CHANGE');
           break;
         case 'CHECK_BUST':
@@ -83,8 +145,7 @@ class CardStores extends EventEmitter {
           this.flipBlank();
           while (_dealerTotal<18) {
             this.pushCard();
-            let newTotal3 = this.countHand(_dealerCards);
-            _dealerTotal = newTotal3;
+            this.countDealerHand();
           }
           this.emit('CHANGE');
           break;
@@ -112,39 +173,39 @@ class CardStores extends EventEmitter {
     _dealerCards.push(newCardDealer);
   }
 
-  countHand(array) {
-    let cardTotal = 0;
-    let aceCount = 0;
-    for (let i=0;i<array.length;i++) {
-      let card = array[i];
+  countDealerHand() {
+    let cardTotal3 = 0;
+    let aceCount3 = 0;
+    for (let i=0;i<_dealerCards.length;i++) {
+      let card = _dealerCards[i];
 
       if (card.value === 'J' || card.value === 'Q' || card.value === 'K') {
-        if (cardTotal+10>21 && aceCount > 0) {
-          cardTotal -= 10;
-          aceCount--;
-          cardTotal += 10;
+        if (cardTotal3+10>21 && aceCount3 > 0) {
+          cardTotal3 -= 10;
+          aceCount3--;
+          cardTotal3 += 10;
         } else {
-          cardTotal += 10;
+          cardTotal3 += 10;
         }
       } else if (card.value === 'A') {
-        aceCount++;
-        if(cardTotal>10) {
-          aceCount--;
-          cardTotal += 1;
+        aceCount3++;
+        if(cardTotal3>10) {
+          aceCount3--;
+          cardTotal3 += 1;
         } else {
-          cardTotal += 11;
+          cardTotal3 += 11;
         }
       } else {
-        if (cardTotal+card.value>21 && aceCount > 0) {
-          cardTotal -= 10;
-          aceCount--;
-          cardTotal += card.value;
+        if (cardTotal3+card.value>21 && aceCount3 > 0) {
+          cardTotal3 -= 10;
+          aceCount3--;
+          cardTotal3 += card.value;
         } else {
-          cardTotal += card.value;
+          cardTotal3 += card.value;
         }
       }
     }
-    return cardTotal;
+    _dealerTotal = cardTotal3;
   }
 
   startListening(callback) {
