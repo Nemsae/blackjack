@@ -27,7 +27,7 @@ export default class Layout extends Component {
 
   _onChange() {
     this.setState({
-      message: CardStores.getMessage(),
+      message: .getMessage(),
     })
   }
 
